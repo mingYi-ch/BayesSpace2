@@ -219,7 +219,16 @@ spatialCluster <- function(
     neighbors <- (pdist <= radius & pdist > 0)
     df_j <- sapply(seq_len(nrow(positions)), 
         function(x) as.vector(which(neighbors[x, ])) - 1)
-    
+                   
+    ## Log number of spots with neighbors
+    n_with_neighbors <- length(keep(df_j, function(nbrs) length(nbrs) > 0))
+    message(
+        "Using customized finding neighbor function\n",
+        "Neighbors were identified for ", n_with_neighbors, " out of ",
+        ncol(sce), " spots."
+    )
+
+    df_j
     df_j
 }
 
