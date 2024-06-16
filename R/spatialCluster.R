@@ -198,12 +198,11 @@ spatialCluster2 <- function(sce, q, use.dimred = "PCA", d = 15,
 #' 
 #' @keywords internal
 #' @importFrom purrr keep discard map
-.find_neighbors <- function(se, radius = sqrt(9000),
-    method = "euclidean") {
+.find_neighbors <- function(se, platform) {
 
-    positions <- spatialCoords(se)
-    method <- match.arg(method)
-    
+    positions <- SpatialCoords(se)
+    method = "euclidean"
+    radius = sqrt(9000)
     pdist <- as.matrix(stats::dist(positions, method=method))
     neighbors <- (pdist <= radius & pdist > 0)
     df_j <- sapply(seq_len(nrow(positions)), 
