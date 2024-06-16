@@ -212,7 +212,7 @@ spatialCluster <- function(
 #' @keywords internal
 #' @importFrom purrr keep discard map
 .find_neighbors <- function(sce, platform) {
-    positions <- SpatialCoords(sce)
+    positions <- colData(spe)[, c('col', 'row')] %>% as.matrix()
     method <- "euclidean"
     radius <- sqrt(9000)
     pdist <- as.matrix(stats::dist(positions, method=method))
